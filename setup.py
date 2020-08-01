@@ -37,8 +37,9 @@ setup(
     ],
 
     python_requires='>=3.3',
+    scripts=['bin/currencycloud-requests'],
 
     keywords=[],
-    install_requires=["currencycloud-python-client", "PyYAML"],
+    install_requires=["currencycloud-python-client", "PyYAML", "colorama"],
     tests_require=[]
 )
