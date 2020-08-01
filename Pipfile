@@ -1,0 +1,10 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+currencycloud-python-client = "==4.5.0.post1"
+PyYAML = "==5.3.1"
+colorama= "==0.4.3"
+
+[dev-packages]
