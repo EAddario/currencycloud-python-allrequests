@@ -64,11 +64,11 @@ def find_balances(session, **kwargs):
         print("Check Balances encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
-def beneficiary_details(session, **kwargs):
+def topup_margin(session, **kwargs):
     try:
-        return session.reference.beneficiary_required_details(**kwargs)
+        return session.balances.top_up_margin(**kwargs)
     except ApiError as err:
-        print("Beneficiary Details encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+        print("Top-up Margin Balance encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
 def logout(session):
