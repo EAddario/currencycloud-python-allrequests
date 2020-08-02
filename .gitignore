@@ -83,7 +83,6 @@ Temporary Items
 # -----------------
 
 .metadata
-bin/
 tmp/
 *.bak
 *.swp
