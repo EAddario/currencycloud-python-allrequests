@@ -71,6 +71,48 @@ def topup_margin(session, **kwargs):
         print("Top-up Margin Balance encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_beneficiaries(session, **kwargs):
+    try:
+        return session.beneficiaries.find(**kwargs)
+    except ApiError as err:
+        print("Find Beneficiaries encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def validate_beneficiary(session, **kwargs):
+    try:
+        return session.beneficiaries.validate(**kwargs)
+    except ApiError as err:
+        print("Validate Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def create_beneficiary(session, **kwargs):
+    try:
+        return session.beneficiaries.create(**kwargs)
+    except ApiError as err:
+        print("Create Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_beneficiary(session, **kwargs):
+    try:
+        return session.beneficiaries.retrieve(**kwargs)
+    except ApiError as err:
+        print("Get Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def update_beneficiary(session, **kwargs):
+    try:
+        return session.beneficiaries.update(**kwargs)
+    except ApiError as err:
+        print("Update Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def delete_beneficiary(session, **kwargs):
+    try:
+        return session.beneficiaries.delete(**kwargs)
+    except ApiError as err:
+        print("Delete Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
