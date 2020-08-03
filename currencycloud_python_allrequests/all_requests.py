@@ -113,6 +113,41 @@ def delete_beneficiary(session, **kwargs):
         print("Delete Beneficiary encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def current_contact(session):
+    try:
+        return session.contacts.current()
+    except ApiError as err:
+        print("Current Contact encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def create_contact(session, **kwargs):
+    try:
+        return session.contacts.create(**kwargs)
+    except ApiError as err:
+        print("Create Contact encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_contact(session, **kwargs):
+    try:
+        return session.contacts.retrieve(**kwargs)
+    except ApiError as err:
+        print("Get Contact encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def find_contacts(session, **kwargs):
+    try:
+        return session.contacts.find(**kwargs)
+    except ApiError as err:
+        print("Find Contacts encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def update_contact(session, **kwargs):
+    try:
+        return session.contacts.update(**kwargs)
+    except ApiError as err:
+        print("Update Contact encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()

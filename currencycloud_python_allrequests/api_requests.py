@@ -1,7 +1,8 @@
 import sys
+import random
+import string
 from colorama import init
 from colorama import Fore, Style
-from random import randint
 
 import currencycloud
 import currencycloud_python_allrequests.all_requests as api
@@ -14,6 +15,11 @@ def output(msg):
     global idx
     print(Style.BRIGHT + getattr(Fore, colors[idx % len(colors)]) + msg)
     idx += 1
+
+
+def random_string(length):
+    chars = string.ascii_uppercase
+    return ''.join(random.choice(chars) for i in range(length))
 
 
 login_id = sys.argv[1]
@@ -33,7 +39,7 @@ output("current_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format
 
 find_accounts = api.find_accounts(client, per_page=3)
 for elmt in find_accounts:
-    output("find_accounts - Account {0} ({1})".format(current_account.account_name, current_account.id))
+    output("find_accounts - Account {0} ({1})".format(elmt.account_name, elmt.id))
 
 create_account = api.create_account(
     client,
@@ -172,11 +178,11 @@ output("get_beneficiary - Id: {0} Name: {1}, Account Holder: {2}, Bank Country: 
 update_beneficiary = api.update_beneficiary(
     client,
     resource_id=get_beneficiary.id,
-    account_number=randint(100000000, 999999999),
+    account_number=random.randint(100000000, 999999999),
     beneficiary_date_of_birth="1968-03-23",
     beneficiary_identification_type="passport",
-    beneficiary_identification_value=randint(100000000, 999999999),
-    beneficiary_external_reference="BEN-REF-" + str(randint(1000, 9999)),
+    beneficiary_identification_value=random.randint(100000000, 999999999),
+    beneficiary_external_reference="BEN-REF-" + str(random.randint(1000, 9999)),
     email="tamara.carlton@fulcrum-fund.org")
 output("update_beneficiary - Id: {0} Name: {1}, Account Number: {2}, Date of birth: {3}, Email: {4}".format(
     update_beneficiary.id,
@@ -192,5 +198,57 @@ output("delete_beneficiary - Id: {0} Name: {1}, Account Holder: {2}, Bank Countr
     delete_beneficiary.bank_account_holder_name,
     delete_beneficiary.bank_country,
     delete_beneficiary.currency))
+
+current_contact = api.current_contact(client)
+output("current_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+    current_contact.login_id,
+    current_contact.id,
+    current_contact.first_name,
+    current_contact.last_name,
+    current_contact.account_name,
+    current_contact.account_id))
+
+find_contacts = api.find_contacts(client, per_page=3)
+for elmt in find_contacts:
+    output("find_contacts - Account {0} ({1})".format(elmt.login_id, elmt.id))
+
+create_contact = api.create_contact(
+    client,
+    account_id=create_account.id,
+    first_name="Wirecard",
+    last_name="Development",
+    email_address="development." + random_string(6) + "@wirecard.com",
+    phone_number="+44 20 3326 8173",
+    date_of_birth="1968-03-23")
+output("create_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+    create_contact.login_id,
+    create_contact.id,
+    create_contact.first_name,
+    create_contact.last_name,
+    create_contact.account_name,
+    create_contact.account_id))
+
+update_contact = api.update_contact(
+    client,
+    resource_id=create_contact.id,
+    your_reference="CTCT-REF-" + str(random.randint(1000, 9999)),
+    status="enabled",
+    locale="en-GB")
+output("update_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Reference: {4}, Status: {5}".format(
+    update_contact.login_id,
+    update_contact.id,
+    update_contact.first_name,
+    update_contact.last_name,
+    update_contact.your_reference,
+    update_contact.status))
+
+get_contact = api.get_contact(client, resource_id=update_contact.id)
+output("get_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+    get_contact.login_id,
+    get_contact.id,
+    get_contact.first_name,
+    get_contact.last_name,
+    get_contact.account_name,
+    get_contact.account_id))
 
 api.logout(client)
