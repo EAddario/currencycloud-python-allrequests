@@ -79,14 +79,14 @@ output("update_payment_charges - Charge Id: {0}, Account Id: {1}, Charge Type: {
                                                                                                                        update_payment_charges.enabled,
                                                                                                                        update_payment_charges.default))
 
-balance = api.get_balance(client, currency='USD')
-output("Your {0} balance is {1}".format(balance.currency, balance.amount))
+get_balance = api.get_balance(client, currency='USD')
+output("Your {0} balance is {1}".format(get_balance.currency, get_balance.amount))
 
-balances = api.find_balances(client, order='currency', per_page=5)
-for elmt in balances:
+find_balances = api.find_balances(client, order='currency', per_page=5)
+for elmt in find_balances:
     output("Your {0} balance is {1}".format(elmt.currency, elmt.amount))
 
-for elmt in balances:
+for elmt in find_balances:
     topup_margin = api.topup_margin(client, currency=elmt.currency, amount=(float(elmt.amount) + 1234.56))
     output("Your new {0} balance is {1}".format(topup_margin.currency, topup_margin.amount))
 
