@@ -1,26 +1,11 @@
-import sys
 import random
-import string
+import sys
+
 from colorama import init
-from colorama import Fore, Style
 
 import currencycloud
-import currencycloud_python_allrequests.all_requests as api
-
-colors = ["WHITE", "YELLOW", "GREEN", "CYAN", "BLUE", "MAGENTA"]
-idx = 0
-
-
-def output(msg):
-    global idx
-    print(Style.BRIGHT + getattr(Fore, colors[idx % len(colors)]) + msg)
-    idx += 1
-
-
-def random_string(length):
-    chars = string.ascii_uppercase
-    return ''.join(random.choice(chars) for i in range(length))
-
+import currencycloud_allrequests.api as api
+from currencycloud_allrequests.util import output, random_string
 
 login_id = sys.argv[1]
 api_key = sys.argv[2]
