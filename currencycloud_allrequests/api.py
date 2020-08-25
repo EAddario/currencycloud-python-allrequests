@@ -148,6 +148,83 @@ def update_contact(session, **kwargs):
         print("Update Contact encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_conversions(session, **kwargs):
+    try:
+        return session.conversions.find(**kwargs)
+    except ApiError as err:
+        print("Find Conversions encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_conversion(session, **kwargs):
+    try:
+        return session.conversions.retrieve(**kwargs)
+    except ApiError as err:
+        print("Get Conversion encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def create_conversion(session, **kwargs):
+    try:
+        return session.conversions.create(**kwargs)
+    except ApiError as err:
+        print("Create Conversion encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def cancellation_quote(session, **kwargs):
+    try:
+        return session.conversions.cancellation_quote(**kwargs)
+    except ApiError as err:
+        print("Conversion Cancellation Quote encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def cancel_conversion(session, **kwargs):
+    try:
+        return session.conversions.cancel(**kwargs)
+    except ApiError as err:
+        print("Cancel Conversion encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def date_change_quote(session, **kwargs):
+    try:
+        return session.conversions.date_change_quote(**kwargs)
+    except ApiError as err:
+        print("Conversion Date Change Quote encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def date_change(session, **kwargs):
+    try:
+        return session.conversions.date_change(**kwargs)
+    except ApiError as err:
+        print("Conversion Date Change encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def split_preview(session, **kwargs):
+    try:
+        return session.conversions.split_preview(**kwargs)
+    except ApiError as err:
+        print("Conversion Split Preview encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def split(session, **kwargs):
+    try:
+        return session.conversions.split(**kwargs)
+    except ApiError as err:
+        print("Conversion Split encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def split_history(session, **kwargs):
+    try:
+        return session.conversions.split_history(**kwargs)
+    except ApiError as err:
+        print("Conversion Split History encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def profit_and_loss(session, **kwargs):
+    try:
+        return session.conversions.profit_and_loss(**kwargs)
+    except ApiError as err:
+        print("Conversion Profit & Loss encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()

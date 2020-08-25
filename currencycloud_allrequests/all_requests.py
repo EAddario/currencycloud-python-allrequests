@@ -1,11 +1,12 @@
 import random
+import uuid
 import sys
 
 from colorama import init
 
 import currencycloud
 import currencycloud_allrequests.api as api
-from currencycloud_allrequests.util import output, random_string
+from currencycloud_allrequests.util import output, random_string, add_working_days
 
 login_id = sys.argv[1]
 api_key = sys.argv[2]
@@ -235,5 +236,124 @@ output("get_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4
     get_contact.last_name,
     get_contact.account_name,
     get_contact.account_id))
+
+find_conversions = api.find_conversions(client, per_page=3, order_asc_desc="desc")
+for elmt in find_conversions:
+    output("find_conversions - Conversion {0} Buy: {1} Sell: {2}, Type: {3} Amount: {4})".format(
+        elmt.id,
+        elmt.buy_currency,
+        elmt.sell_currency,
+        elmt.fixed_side,
+        elmt.client_buy_amount if elmt.fixed_side == "buy" else elmt.client_sell_amount))
+
+find_conversions = api.find_conversions(client, per_page=3, order_asc_desc="desc")
+for elmt in find_conversions:
+    output("get_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+        elmt.id,
+        elmt.buy_currency,
+        elmt.client_buy_amount,
+        elmt.unique_request_id))
+
+create_conversion = api.create_conversion(
+    client,
+    buy_currency="EUR",
+    sell_currency="GBP",
+    amount=str(round(random.uniform(6543.21, 12345.67), 2)),
+    fixed_side="buy",
+    reason="Invoice Payment",
+    term_agreement="true",
+    unique_request_id=uuid.uuid4())
+output("create_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+    create_conversion.id,
+    create_conversion.buy_currency,
+    create_conversion.client_buy_amount,
+    create_conversion.unique_request_id))
+
+get_conversion = api.get_conversion(client, resource_id=create_conversion.id)
+output("get_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+    get_conversion.id,
+    get_conversion.buy_currency,
+    get_conversion.client_buy_amount,
+    get_conversion.unique_request_id))
+
+date_change_quote = api.date_change_quote(
+    client,
+    resource_id=create_conversion.id,
+    new_settlement_date=add_working_days(create_conversion.settlement_date, 7))
+output("date_change_quote - Conversion {0} Amount: {1} Old Date: {2} New Date: {3}".format(
+    date_change_quote.conversion_id,
+    date_change_quote.amount,
+    date_change_quote.old_settlement_date,
+    date_change_quote.new_settlement_date))
+
+date_change = api.date_change(
+    client,
+    resource_id=create_conversion.id,
+    new_settlement_date=add_working_days(create_conversion.settlement_date, 7))
+output("date_change - Conversion {0} Amount: {1} Old Date: {2} New Date: {3}".format(
+    date_change.conversion_id,
+    date_change.amount,
+    date_change.old_settlement_date,
+    date_change.new_settlement_date))
+
+split_preview = api.split_preview(
+    client,
+    resource_id=create_conversion.id,
+    amount=round((float(create_conversion.client_buy_amount) * 0.5), 2))
+output("split_preview - Parent: {0} Amount: {1} Child: {2} Amount: {3}".format(
+    split_preview.parent_conversion.get("id"),
+    split_preview.parent_conversion.get("buy_amount"),
+    split_preview.child_conversion.get("id"),
+    split_preview.child_conversion.get("buy_amount")))
+
+split = api.split(
+    client,
+    resource_id=create_conversion.id,
+    amount=round((float(create_conversion.client_buy_amount) * 0.5), 2))
+output("split - Parent: {0} Amount: {1} Child: {2} Amount: {3}".format(
+    split.parent_conversion.get("id"),
+    split.parent_conversion.get("buy_amount"),
+    split.child_conversion.get("id"),
+    split.child_conversion.get("buy_amount")))
+
+split_history = api.split_history(
+    client,
+    resource_id=create_conversion.id)
+output("split_history - Parent: {0} Origin: {1} Child: {2} Amount: {3}".format(
+    split_history.parent_conversion,
+    split_history.origin_conversion,
+    split_history.child_conversions[0]["id"],
+    split_history.child_conversions[0]["buy_amount"]))
+
+parent_cancellation_quote = api.cancellation_quote(client, resource_id=split.parent_conversion.get("id"))
+output("cancellation_quote - Parent Amount: {0} Currency: {1} Time: {2}".format(
+    parent_cancellation_quote.amount,
+    parent_cancellation_quote.currency,
+    parent_cancellation_quote.event_date_time))
+
+child_cancellation_quote = api.cancellation_quote(client, resource_id=split.child_conversion.get("id"))
+output("cancellation_quote - Child Amount: {0} Currency: {1} Time: {2}".format(
+    child_cancellation_quote.amount,
+    child_cancellation_quote.currency,
+    child_cancellation_quote.event_date_time))
+
+cancel_parent_conversion = api.cancel_conversion(client, resource_id=split.parent_conversion.get("id"))
+output("cancel_conversion - Conversion {0} Amount: {1} Type: {2}".format(
+    cancel_parent_conversion.conversion_id,
+    cancel_parent_conversion.amount,
+    cancel_parent_conversion.event_type))
+
+cancel_child_conversion = api.cancel_conversion(client, resource_id=split.child_conversion.get("id"))
+output("cancel_conversion - Conversion {0} Amount: {1} Type: {2}".format(
+    cancel_child_conversion.conversion_id,
+    cancel_child_conversion.amount,
+    cancel_child_conversion.event_type))
+
+profit_and_loss = api.profit_and_loss(client, currency="EUR")
+for elmt in profit_and_loss:
+    output("profit_and_loss - Conversion {0} Amount: {1} Type: {2}".format(
+        elmt.conversion_id,
+        elmt.amount,
+        elmt.event_type))
 
 api.logout(client)
