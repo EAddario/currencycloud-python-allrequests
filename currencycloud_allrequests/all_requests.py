@@ -467,6 +467,14 @@ output("payment_submission - Status: {0} MT103: {1} Reference: {2}".format(
     payment_submission.mt103,
     payment_submission.submission_ref))
 
+get_payer = api.get_payer(client, resource_id=create_payment.payer_id)
+output("get_payer - Id: {0} Type: {1} Address: {2} City: {3} Country: {4}".format(
+    get_payer.id,
+    get_payer.legal_entity_type,
+    get_payer.address,
+    get_payer.city,
+    get_payer.country))
+
 delete_payment = api.delete_payment(client, resource_id=create_payment.id)
 output("delete_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
     delete_payment.id,
