@@ -365,4 +365,13 @@ for elmt in funding_accounts:
         elmt.account_holder_name,
         elmt.currency))
 
+find_ibans = api.find_ibans(client, per_page=5)
+for elmt in find_ibans:
+    output("find_ibans - Id {0} Account Id: {1} IBAN: {2} Holder: {3} Currency: {4}".format(
+        elmt.id,
+        elmt.account_id,
+        elmt.iban_code,
+        elmt.account_holder_name,
+        elmt.currency))
+
 api.logout(client)
