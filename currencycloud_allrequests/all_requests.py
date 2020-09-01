@@ -356,4 +356,13 @@ for elmt in profit_and_loss:
         elmt.amount,
         elmt.event_type))
 
+funding_accounts = api.find_funding_accounts(client, currency="GBP", per_page=5)
+for elmt in funding_accounts:
+    output("funding_accounts - Id {0} Account Id: {1} Account Number: {2} Holder: {3} Currency: {4}".format(
+        elmt.id,
+        elmt.account_id,
+        elmt.account_number,
+        elmt.account_holder_name,
+        elmt.currency))
+
 api.logout(client)

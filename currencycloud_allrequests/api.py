@@ -225,6 +225,13 @@ def profit_and_loss(session, **kwargs):
         print("Conversion Profit & Loss encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_funding_accounts(session, **kwargs):
+    try:
+        return session.funding.find_funding_accounts(**kwargs)
+    except ApiError as err:
+        print("Find Funding Accounts encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
