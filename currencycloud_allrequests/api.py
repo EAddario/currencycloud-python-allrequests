@@ -232,6 +232,13 @@ def find_funding_accounts(session, **kwargs):
         print("Find Funding Accounts encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_ibans(session, **kwargs):
+    try:
+        return session.ibans.find(**kwargs)
+    except ApiError as err:
+        print("Find IBANs encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
