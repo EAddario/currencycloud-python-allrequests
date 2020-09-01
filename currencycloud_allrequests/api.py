@@ -309,6 +309,13 @@ def payment_submission(session, **kwargs):
         print("Payment Submission encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def get_payer(session, **kwargs):
+    try:
+        return session.payers.retrieve(**kwargs)
+    except ApiError as err:
+        print("Retrieve Payers encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
