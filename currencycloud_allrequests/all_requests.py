@@ -25,7 +25,7 @@ output("current_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format
 
 find_accounts = api.find_accounts(client, per_page=3)
 for elmt in find_accounts:
-    output("find_accounts - Account {0} ({1})".format(elmt.account_name, elmt.id))
+    output("find_accounts - Account: {0} ({1})".format(elmt.account_name, elmt.id))
 
 create_account = api.create_account(
     client,
@@ -38,7 +38,7 @@ create_account = api.create_account(
     api_trading=True,
     online_trading=True,
     phone_trading=True)
-output("create_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
+output("create_account - Account: {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
     create_account.account_name,
     create_account.id,
     create_account.street,
@@ -47,7 +47,7 @@ output("create_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
     create_account.country))
 
 update_account = api.update_account(client, resource_id=create_account.id, city="London")
-output("update_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
+output("update_account - Account: {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
     update_account.account_name,
     update_account.id,
     update_account.street,
@@ -56,7 +56,7 @@ output("update_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
     update_account.country))
 
 get_account = api.get_account(client, resource_id=update_account.id)
-output("get_account - Account {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
+output("get_account - Account: {0} ({1}), Address: {2}, {3}, {4}, {5}".format(
     get_account.account_name,
     get_account.id,
     get_account.street,
@@ -177,16 +177,8 @@ output("update_beneficiary - Id: {0} Name: {1}, Account Number: {2}, Date of bir
     update_beneficiary.beneficiary_date_of_birth,
     update_beneficiary.email))
 
-delete_beneficiary = api.delete_beneficiary(client, resource_id=update_beneficiary.id)
-output("delete_beneficiary - Id: {0} Name: {1}, Account Holder: {2}, Bank Country: {3}, Currency: {4}".format(
-    delete_beneficiary.id,
-    delete_beneficiary.name,
-    delete_beneficiary.bank_account_holder_name,
-    delete_beneficiary.bank_country,
-    delete_beneficiary.currency))
-
 current_contact = api.current_contact(client)
-output("current_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+output("current_contact - Login Id: {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
     current_contact.login_id,
     current_contact.id,
     current_contact.first_name,
@@ -196,7 +188,7 @@ output("current_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account
 
 find_contacts = api.find_contacts(client, per_page=3)
 for elmt in find_contacts:
-    output("find_contacts - Account {0} ({1})".format(elmt.login_id, elmt.id))
+    output("find_contacts - Account: {0} ({1})".format(elmt.login_id, elmt.id))
 
 create_contact = api.create_contact(
     client,
@@ -206,7 +198,7 @@ create_contact = api.create_contact(
     email_address="development." + random_string(6) + "@wirecard.com",
     phone_number="+44 20 3326 8173",
     date_of_birth="1968-03-23")
-output("create_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+output("create_contact - Login Id: {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
     create_contact.login_id,
     create_contact.id,
     create_contact.first_name,
@@ -220,7 +212,7 @@ update_contact = api.update_contact(
     your_reference="CTCT-REF-" + str(random.randint(1000, 9999)),
     status="enabled",
     locale="en-GB")
-output("update_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Reference: {4}, Status: {5}".format(
+output("update_contact - Login Id: {0} ({1}), Name: {2}, Last Name: {3}, Reference: {4}, Status: {5}".format(
     update_contact.login_id,
     update_contact.id,
     update_contact.first_name,
@@ -229,7 +221,7 @@ output("update_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Referenc
     update_contact.status))
 
 get_contact = api.get_contact(client, resource_id=update_contact.id)
-output("get_contact - Login Id {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
+output("get_contact - Login Id: {0} ({1}), Name: {2}, Last Name: {3}, Account: {4}, Id: {5}".format(
     get_contact.login_id,
     get_contact.id,
     get_contact.first_name,
@@ -248,7 +240,7 @@ for elmt in find_conversions:
 
 find_conversions = api.find_conversions(client, per_page=3, order_asc_desc="desc")
 for elmt in find_conversions:
-    output("get_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+    output("get_conversion - Conversion: {0} Amount: {1} Currency: {2} Request Id: {3}".format(
         elmt.id,
         elmt.buy_currency,
         elmt.client_buy_amount,
@@ -263,14 +255,14 @@ create_conversion = api.create_conversion(
     reason="Invoice Payment",
     term_agreement="true",
     unique_request_id=uuid.uuid4())
-output("create_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+output("create_conversion - Conversion: {0} Amount: {1} Currency: {2} Request Id: {3}".format(
     create_conversion.id,
     create_conversion.buy_currency,
     create_conversion.client_buy_amount,
     create_conversion.unique_request_id))
 
 get_conversion = api.get_conversion(client, resource_id=create_conversion.id)
-output("get_conversion - Conversion {0} Amount: {1} Currency: {2} Request Id: {3}".format(
+output("get_conversion - Conversion: {0} Amount: {1} Currency: {2} Request Id: {3}".format(
     get_conversion.id,
     get_conversion.buy_currency,
     get_conversion.client_buy_amount,
@@ -280,7 +272,7 @@ date_change_quote = api.date_change_quote(
     client,
     resource_id=create_conversion.id,
     new_settlement_date=add_working_days(create_conversion.settlement_date, 7))
-output("date_change_quote - Conversion {0} Amount: {1} Old Date: {2} New Date: {3}".format(
+output("date_change_quote - Conversion: {0} Amount: {1} Old Date: {2} New Date: {3}".format(
     date_change_quote.conversion_id,
     date_change_quote.amount,
     date_change_quote.old_settlement_date,
@@ -290,7 +282,7 @@ date_change = api.date_change(
     client,
     resource_id=create_conversion.id,
     new_settlement_date=add_working_days(create_conversion.settlement_date, 7))
-output("date_change - Conversion {0} Amount: {1} Old Date: {2} New Date: {3}".format(
+output("date_change - Conversion: {0} Amount: {1} Old Date: {2} New Date: {3}".format(
     date_change.conversion_id,
     date_change.amount,
     date_change.old_settlement_date,
@@ -338,27 +330,27 @@ output("cancellation_quote - Child Amount: {0} Currency: {1} Time: {2}".format(
     child_cancellation_quote.event_date_time))
 
 cancel_parent_conversion = api.cancel_conversion(client, resource_id=split.parent_conversion.get("id"))
-output("cancel_conversion - Conversion {0} Amount: {1} Type: {2}".format(
+output("cancel_conversion - Conversion: {0} Amount: {1} Type: {2}".format(
     cancel_parent_conversion.conversion_id,
     cancel_parent_conversion.amount,
     cancel_parent_conversion.event_type))
 
 cancel_child_conversion = api.cancel_conversion(client, resource_id=split.child_conversion.get("id"))
-output("cancel_conversion - Conversion {0} Amount: {1} Type: {2}".format(
+output("cancel_conversion - Conversion: {0} Amount: {1} Type: {2}".format(
     cancel_child_conversion.conversion_id,
     cancel_child_conversion.amount,
     cancel_child_conversion.event_type))
 
 profit_and_loss = api.profit_and_loss(client, currency="EUR")
 for elmt in profit_and_loss:
-    output("profit_and_loss - Conversion {0} Amount: {1} Type: {2}".format(
+    output("profit_and_loss - Conversion: {0} Amount: {1} Type: {2}".format(
         elmt.conversion_id,
         elmt.amount,
         elmt.event_type))
 
 funding_accounts = api.find_funding_accounts(client, currency="GBP", per_page=5)
 for elmt in funding_accounts:
-    output("funding_accounts - Id {0} Account Id: {1} Account Number: {2} Holder: {3} Currency: {4}".format(
+    output("funding_accounts - Id: {0} Account Id: {1} Account Number: {2} Holder: {3} Currency: {4}".format(
         elmt.id,
         elmt.account_id,
         elmt.account_number,
@@ -367,11 +359,128 @@ for elmt in funding_accounts:
 
 find_ibans = api.find_ibans(client, per_page=5)
 for elmt in find_ibans:
-    output("find_ibans - Id {0} Account Id: {1} IBAN: {2} Holder: {3} Currency: {4}".format(
+    output("find_ibans - Id: {0} Account Id: {1} IBAN: {2} Holder: {3} Currency: {4}".format(
         elmt.id,
         elmt.account_id,
         elmt.iban_code,
         elmt.account_holder_name,
         elmt.currency))
+
+find_payments = api.find_payments(client, per_page=5)
+for elmt in find_payments:
+    output("find_payments - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
+        elmt.id,
+        elmt.beneficiary_id,
+        elmt.reference,
+        elmt.amount,
+        elmt.currency))
+
+create_payment = api.create_payment(
+    client,
+    currency="EUR",
+    beneficiary_id=create_beneficiary.id,
+    amount=str(round(random.uniform(6543.21, 12345.67), 2)),
+    reason="Invoice",
+    reference="PYM-INV-" + str(random.randint(1000, 9999)),
+    unique_request_id=uuid.uuid4(),
+    payer_entity_type="individual",
+    payer_address="Piazza Museo, n° 19",
+    payer_city="Napoli",
+    payer_country="IT",
+    payer_identification_type="passport",
+    payer_identification_value="23031968",
+    payer_first_name="Francesco",
+    payer_last_name="Bianco",
+    payer_date_of_birth="1968-03-23")
+output("create_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
+    create_payment.id,
+    create_payment.beneficiary_id,
+    create_payment.reference,
+    create_payment.amount,
+    create_payment.currency))
+
+get_payment = api.get_payment(client, resource_id=create_payment.id)
+output("get_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
+    get_payment.id,
+    get_payment.beneficiary_id,
+    get_payment.reference,
+    get_payment.amount,
+    get_payment.currency))
+
+update_payment = api.update_payment(
+    client,
+    resource_id=create_payment.id,
+    reference="PYM-INV-" + str(random.randint(1000, 9999)))
+output("update_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
+    update_payment.id,
+    update_payment.beneficiary_id,
+    update_payment.reference,
+    update_payment.amount,
+    update_payment.currency))
+
+authorise_payment = api.authorise_payment(client, payment_ids=[create_payment.id])
+for elmt in authorise_payment.authorisations:
+    output("authorise_payment - Id: {0} Status: {1} Updated? {2} Error? {3} Reference: {4}".format(
+        elmt.payment_id,
+        elmt.payment_status,
+        elmt.updated,
+        elmt.error,
+        elmt.short_reference))
+
+payment_delivery_date = api.payment_delivery_date(
+    client,
+    payment_date=create_payment.payment_date,
+    payment_type=create_payment.payment_type,
+    currency=create_payment.currency,
+    bank_country=create_beneficiary.bank_country)
+output("payment_delivery_date - Payment Date: {0} Delivery: {1} Cutoff: {2} Type: {3} Currency: {4}".format(
+    payment_delivery_date.payment_date,
+    payment_delivery_date.payment_delivery_date,
+    payment_delivery_date.payment_cutoff_time,
+    payment_delivery_date.payment_type,
+    payment_delivery_date.currency))
+
+quote_payment_fee = api.quote_payment_fee(
+    client,
+    payment_currency=create_payment.currency,
+    payment_destination_country=create_beneficiary.bank_country,
+    payment_type=create_payment.payment_type)
+output("quote_payment_fee - Account Id: {0} Currency: {1} Country: {2} Type: {3} Fee: {4} {5}".format(
+    quote_payment_fee.account_id,
+    quote_payment_fee.payment_currency,
+    quote_payment_fee.payment_destination_country,
+    quote_payment_fee.payment_type,
+    quote_payment_fee.fee_amount,
+    quote_payment_fee.fee_currency))
+
+payment_confirmation = api.payment_confirmation(client, resource_id=create_payment.id)
+output("payment_confirmation - Id: {0} Payment Id: {1} Reference: {2} Status: {3} URL: {4}".format(
+    payment_confirmation.id,
+    payment_confirmation.payment_id,
+    payment_confirmation.short_reference,
+    payment_confirmation.status,
+    payment_confirmation.confirmation_url))
+
+payment_submission = api.payment_submission(client, resource_id=create_payment.id)
+output("payment_submission - Status: {0} MT103: {1} Reference: {2}".format(
+    payment_submission.status,
+    payment_submission.mt103,
+    payment_submission.submission_ref))
+
+delete_payment = api.delete_payment(client, resource_id=create_payment.id)
+output("delete_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
+    delete_payment.id,
+    delete_payment.beneficiary_id,
+    delete_payment.reference,
+    delete_payment.amount,
+    delete_payment.currency))
+
+delete_beneficiary = api.delete_beneficiary(client, resource_id=create_beneficiary.id)
+output("delete_beneficiary - Id: {0} Name: {1}, Account Holder: {2}, Bank Country: {3}, Currency: {4}".format(
+    delete_beneficiary.id,
+    delete_beneficiary.name,
+    delete_beneficiary.bank_account_holder_name,
+    delete_beneficiary.bank_country,
+    delete_beneficiary.currency))
 
 api.logout(client)

@@ -239,6 +239,76 @@ def find_ibans(session, **kwargs):
         print("Find IBANs encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_payments(session, **kwargs):
+    try:
+        return session.payments.find(**kwargs)
+    except ApiError as err:
+        print("Find Payments encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def create_payment(session, **kwargs):
+    try:
+        return session.payments.create(**kwargs)
+    except ApiError as err:
+        print("Create Payment encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def delete_payment(session, **kwargs):
+    try:
+        return session.payments.delete(**kwargs)
+    except ApiError as err:
+        print("Delete Payment encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_payment(session, **kwargs):
+    try:
+        return session.payments.retrieve(**kwargs)
+    except ApiError as err:
+        print("Retrieve Payment encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def update_payment(session, **kwargs):
+    try:
+        return session.payments.update(**kwargs)
+    except ApiError as err:
+        print("Update Payment encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def authorise_payment(session, **kwargs):
+    try:
+        return session.payments.authorise(**kwargs)
+    except ApiError as err:
+        print("Authorise Payment encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_delivery_date(session, **kwargs):
+    try:
+        return session.payments.payment_delivery_date(**kwargs)
+    except ApiError as err:
+        print("Payment Delivery Date encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def quote_payment_fee(session, **kwargs):
+    try:
+        return session.payments.quote_payment_fee(**kwargs)
+    except ApiError as err:
+        print("Quote Payment Fee encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_confirmation(session, **kwargs):
+    try:
+        return session.payments.payment_confirmation(**kwargs)
+    except ApiError as err:
+        print("Payment Confirmation encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_submission(session, **kwargs):
+    try:
+        return session.payments.retrieve_submission(**kwargs)
+    except ApiError as err:
+        print("Payment Submission encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
