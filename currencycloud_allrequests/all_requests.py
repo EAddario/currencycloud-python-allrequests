@@ -475,6 +475,27 @@ output("get_payer - Id: {0} Type: {1} Address: {2} City: {3} Country: {4}".forma
     get_payer.city,
     get_payer.country))
 
+find_rates = api.find_rates(client, currency_pair="EURGBP,USDGBP")
+for elmt in find_rates.currencies:
+    output("find_rates - Pair: {0} Bid: {1}  Offer: {2}".format(
+        elmt.currency_pair,
+        elmt.bid,
+        elmt.offer))
+
+get_rate = api.get_rate(
+    client,
+    buy_currency='EUR',
+    sell_currency='GBP',
+    fixed_side='buy',
+    amount=str(round(random.uniform(6543.21, 12345.67), 2)),
+    conversion_date_preference="optimize_liquidity")
+output("get_rate - Buy: {0} {1} Sell: {2} {3} Cutoff: {4}".format(
+    get_rate.client_buy_amount,
+    get_rate.client_buy_currency,
+    get_rate.client_sell_amount,
+    get_rate.client_sell_currency,
+    get_rate.settlement_cut_off_time))
+
 delete_payment = api.delete_payment(client, resource_id=create_payment.id)
 output("delete_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
     delete_payment.id,

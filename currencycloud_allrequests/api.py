@@ -316,6 +316,20 @@ def get_payer(session, **kwargs):
         print("Retrieve Payers encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def find_rates(session, **kwargs):
+    try:
+        return session.rates.find(**kwargs)
+    except ApiError as err:
+        print("Find Rates encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_rate(session, **kwargs):
+    try:
+        return session.rates.detailed(**kwargs)
+    except ApiError as err:
+        print("Get Rate encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
