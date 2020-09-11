@@ -496,6 +496,75 @@ output("get_rate - Buy: {0} {1} Sell: {2} {3} Cutoff: {4}".format(
     get_rate.client_sell_currency,
     get_rate.settlement_cut_off_time))
 
+beneficiary_required_details = api.beneficiary_required_details(
+    client,
+    currency="EUR",
+    bank_account_country="IT",
+    beneficiary_country="IT")
+output("beneficiary_required_details - Payment Type: {0} Entity: {1}, IBAN Regex: {2}, BIC Regex: {3}".format(
+    beneficiary_required_details[0].payment_type,
+    beneficiary_required_details[0].beneficiary_entity_type,
+    beneficiary_required_details[0].iban,
+    beneficiary_required_details[0].bic_swift))
+
+conversion_dates = api.conversion_dates(client, conversion_pair="GBPEUR")
+for date, reason in conversion_dates.invalid_conversion_dates.items():
+    output("conversion_dates - Date: {0} Reason: {1}".format(
+        date,
+        reason))
+
+currencies = api.currencies(client)
+for elmt in currencies:
+    output("currencies - Code: {0} Name: {1} Buy? {2} Sell? {3} Online? {4}".format(
+        elmt.code,
+        elmt.name,
+        elmt.can_buy,
+        elmt.can_sell,
+        elmt.online_trading))
+
+payment_dates = api.payment_dates(client, currency="EUR")
+for date, reason in payment_dates["invalid_payment_dates"].items():  # TODO: Remove this hack by fixing currencycloud-python-client reference.py
+    output("payment_dates - Date: {0} Reason: {1}".format(
+        date,
+        reason))
+
+settlement_accounts = api.settlement_accounts(client)
+for elmt in settlement_accounts:
+    output("settlement_accounts - Bank: {0} Acct Name: {1} IBAN: {2}".format(
+        elmt.bank_name,
+        elmt.bank_account_holder_name,
+        elmt.iban))
+
+payer_required_details = api.payer_required_details(
+    client,
+    payer_country="GB",
+    payer_entity_type="individual",
+    payment_type="regular",
+    currency="GBP")
+for elmt in payer_required_details[0].required_fields:
+    output("payer_required_details - Name: {0} Validation Regex: {1}".format(
+        elmt.get("name"),
+        elmt.get("validation_rule")))
+
+payment_purpose_codes = api.payment_purpose_codes(client, currency="INR", bank_account_country="IN")
+for elmt in payment_purpose_codes:
+    output("payment_purpose_codes - Entity: {0} Purpose Code: {1} Description: {2}".format(
+        elmt.entity_type,
+        elmt.purpose_code,
+        elmt.purpose_description))
+
+bank_details = api.bank_details(client, identifier_type="iban", identifier_value="GB19TCCL00997901654515")
+output("bank_details - Acct: {0} BIC/SWIFT: {1} Name: {2} Address: {3}".format(
+    bank_details.account_number,
+    bank_details.bic_swift,
+    bank_details.bank_name,
+    bank_details.bank_address))
+
+payment_fee_rules = api.payment_fee_rules(client)
+for elmt in payment_fee_rules:
+    output("payment_fee_rules - Rule: {0}".format(
+        elmt))
+
 delete_payment = api.delete_payment(client, resource_id=create_payment.id)
 output("delete_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
     delete_payment.id,

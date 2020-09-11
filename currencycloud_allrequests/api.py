@@ -330,6 +330,69 @@ def get_rate(session, **kwargs):
         print("Get Rate encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def beneficiary_required_details(session, **kwargs):
+    try:
+        return session.reference.beneficiary_required_details(**kwargs)
+    except ApiError as err:
+        print("Beneficiary Required Details encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def conversion_dates(session, **kwargs):
+    try:
+        return session.reference.conversion_dates(**kwargs)
+    except ApiError as err:
+        print("Conversion Dates encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def currencies(session, **kwargs):
+    try:
+        return session.reference.currencies(**kwargs)
+    except ApiError as err:
+        print("Currencies encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_dates(session, **kwargs):
+    try:
+        return session.reference.payment_dates(**kwargs)
+    except ApiError as err:
+        print("Payment Dates encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def settlement_accounts(session, **kwargs):
+    try:
+        return session.reference.settlement_accounts(**kwargs)
+    except ApiError as err:
+        print("Settlement Accounts encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payer_required_details(session, **kwargs):
+    try:
+        return session.reference.payer_required_details(**kwargs)
+    except ApiError as err:
+        print("Payer Required Details encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_purpose_codes(session, **kwargs):
+    try:
+        return session.reference.payment_purpose_codes(**kwargs)
+    except ApiError as err:
+        print("Payment Purpose Codes encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def bank_details(session, **kwargs):
+    try:
+        return session.reference.bank_details(**kwargs)
+    except ApiError as err:
+        print("Bank Details encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def payment_fee_rules(session, **kwargs):
+    try:
+        return session.reference.payment_fee_rules(**kwargs)
+    except ApiError as err:
+        print("Payment Fee Rules encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
