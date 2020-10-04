@@ -393,6 +393,34 @@ def payment_fee_rules(session, **kwargs):
         print("Payment Fee Rules encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
 
 
+def create_conversion_report(session, **kwargs):
+    try:
+        return session.report.create_report_for_conversions(**kwargs)
+    except ApiError as err:
+        print("Create Conversion Report encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def create_payment_report(session, **kwargs):
+    try:
+        return session.report.create_report_for_payments(**kwargs)
+    except ApiError as err:
+        print("Create Payment Report encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def find_reports(session, **kwargs):
+    try:
+        return session.report.find(**kwargs)
+    except ApiError as err:
+        print("Find Reports encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
+def get_report(session, **kwargs):
+    try:
+        return session.report.find_via_id(**kwargs)
+    except ApiError as err:
+        print("Get Reports encountered an error: {0} (HTTP code {1})".format(err.code, err.status_code))
+
+
 def logout(session):
     try:
         session.auth.close_session()
