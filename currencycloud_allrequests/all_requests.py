@@ -565,6 +565,31 @@ for elmt in payment_fee_rules:
     output("payment_fee_rules - Rule: {0}".format(
         elmt))
 
+create_conversion_report = api.create_conversion_report(client)
+output("create_conversion_report - Id: {0} Reference: {1}".format(
+    create_conversion_report.id,
+    create_conversion_report.short_reference))
+
+create_payment_report = api.create_payment_report(client)
+output("create_payment_report - Id: {0} Reference: {1}".format(
+    create_payment_report.id,
+    create_payment_report.short_reference))
+
+find_reports = api.find_reports(client, per_page=5, order_asc_desc="desc")
+for elmt in find_reports:
+    output("find_reports - Id: {0} Reference: {1} Expiration: {2} URL: {3}".format(
+        elmt.id,
+        elmt.short_reference,
+        elmt.expiration_date,
+        elmt.report_url))
+
+get_report = api.get_report(client, resource_id=create_conversion_report.id)
+output("get_report - Id: {0} Reference: {1} Expiration: {2} URL: {3}".format(
+    get_report.id,
+    get_report.short_reference,
+    get_report.expiration_date,
+    get_report.report_url))
+
 delete_payment = api.delete_payment(client, resource_id=create_payment.id)
 output("delete_payment - Id: {0} Beneficiary Id: {1} Reference: {2} Amount: {3} Currency: {4}".format(
     delete_payment.id,
